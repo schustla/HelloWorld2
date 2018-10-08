@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>schustla</title> 
+</head>
+<body>
+<h1>{{ excel_file }}</h1>
+<form action="" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="file" name="excel_file" accept="excel/*">
+  <input type="submit">
+</form>
+<p>{{ rlt }}</p>
+<h3>读取了excel</h3>
+<p>你上传的excel文件行数为{{ncol}}列</p>
+</body>
+</html>

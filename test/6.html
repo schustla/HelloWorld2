@@ -1,0 +1,11 @@
+<script>
+    var json = $('#detail').val();
+    var result = JSON.stringify(JSON.parse(json), null, 4);
+    $('#detail').val(result);
+</script>
+<p>
+    <label>user：</label>
+</p>
+<p>
+    <textarea id="detail" readonly="readonly">${detail}</textarea>
+</p>

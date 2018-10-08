@@ -1,0 +1,45 @@
+<script>
+URL url = new URL("http://op.juhe.cn/onebox/weather/query");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    String par = "cityname=昌平&key=633a2171bde0bf871680e74f14557***";
+                    /**
+                     * Connection : 默认是开启输入流的 ,关闭输出流
+                     *  开启输出流 ,一般使用POST请求上传数据时 , 设置
+                     */
+                    conn.setDoOutput(true);
+                    //设置请求方式POST
+                    conn.setRequestMethod("POST");
+                    //开始连接
+                    conn.connect();
+                    //获取指向服务器的输出流
+                    OutputStream os = conn.getOutputStream();
+                    //将输出流转换成打印流
+                    PrintWriter pw = new PrintWriter(os);
+                    //向服务器传递数据
+                    pw.println(par);
+                    //刷新一下
+                    pw.flush();
+
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String text = null;
+                    StringBuffer sb = new StringBuffer();
+                    while ((text=br.readLine())!=null) {
+                        sb.append(text);
+                    }
+
+                    //拿到结果  sb.toString();
+                    JSONObject json = new JSONObject(sb.toString());
+                    json = json.getJSONObject("result");
+                    json = json.getJSONObject("data");
+                    JSONArray arr = json.getJSONArray("weather");
+
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject obj = arr.getJSONObject(i);
+                        String date = obj.getString("date");
+                        obj = obj.getJSONObject("info");
+                        JSONArray array = obj.getJSONArray("day");
+                        String weather = "天气:"+array.getString(1)+",温度:"+array.getString(2);
+                        datas.add(date+"\n\r\t\t"+weather);
+
+                    }
+    </script>
